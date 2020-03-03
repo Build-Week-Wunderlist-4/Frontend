@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Test from './components/Test';
+
+
 // import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -44,7 +46,6 @@ function App() {
     <Route path="/test">
      <Test />
     </Route>
-  
       </div>
   );
 }
