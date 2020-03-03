@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,8 +17,10 @@ const Login= () => {
     
     const login = event => {
         event.preventDefault();
-        axios.post()
-        .then(response => { })
+        axios.post('')
+            .then(res => { 
+            console.log(res)
+        })
         .catch(error => { console.log(error); })
     }
     
