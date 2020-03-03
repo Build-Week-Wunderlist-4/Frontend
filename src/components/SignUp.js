@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 import axios from 'axios';
 
-const SignUp= () => {
+const SignUp = () => {
     const [user, setUser] = useState({
         username: '',
         password: ''
@@ -16,7 +16,7 @@ const SignUp= () => {
         })
     }
     
-    const login = event => {
+    const register = event => {
         event.preventDefault();
         axios.post()
         .then(response => { })
@@ -25,7 +25,7 @@ const SignUp= () => {
     
     return (
         <div className='login-form'>
-        <form onSubmit={login}>
+        <form onSubmit={register}>
 
             <div>
                 <label htmlFor='name'>Username</label>
