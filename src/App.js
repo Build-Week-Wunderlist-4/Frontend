@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
+import AxiosWithAuth from './utils/AxiosWithAuth';
 import axios from 'axios';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
@@ -12,12 +13,14 @@ function App() {
   const [user, setUser] = useState({});
   const history = useHistory();
   console.log('user!', user)
+ 
   const login = (data) => {
     
      axios
-      .post("https://airbnbclonedevin.herokuapp.com/auth/login", data)
+      .post("https://wunderlistbuild.herokuapp.com/api/auth/login", user)
        .then(res => {
-         setUser(res);
+         localStorage.setItem('token', res.data.getToken);
+         setUser(user.username);
          history.push('/test')
       })
       .catch(error => {
@@ -25,8 +28,6 @@ function App() {
       });
     
   }
-
-
 
 
   return (
