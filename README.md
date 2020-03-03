@@ -66,3 +66,30 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+Objectives Rubrik for 2
+
+[] Applied JS: 
+
+Student created functional components and used events in application to add dynamic functionality to app.
+    
+    event chosen: text in form turns green if validated and red if not validated.
+
+[] Into to React:
+
+Student's code was organized at the component level, proper usage of state and props are demonstrated throughout the project, the UI is composed of small reusable components, proper usage of useState and useEffect hooks are clearly incorporated and correctly implemented.  Student used Array methods to dynamically render HTML elements.
+
+[] Single Page application:
+
+Student implemented GET requests using either Axios or Fetch to display 3rd party data on a deployed page. Route management properly installed and used to show top level pages as well as nested views where necessary.
+
+
+[] form management:
+
+Student has set up component management for the forms in the app that makes sense for each form. Student made the decision to use a third-party library, like Formik, or not, and can defend their decision. Some form validation is in place.
+
+
+
+
+
