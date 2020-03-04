@@ -64,7 +64,7 @@ const Login = ({login}) => {
         </button>
       
         <NewUser>
-          <h3>New User?</h3>
+          <h3>Ready to get stuff done?</h3>
           <Link to="/signUp"> <button>Sign Up Here</button></Link>
         </NewUser>
       </Form>
