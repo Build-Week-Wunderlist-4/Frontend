@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
+import styled from "styled-components";
 
 const ToDo = () => {
   const [input, setInput] = useState({});
@@ -74,10 +75,24 @@ const ToDo = () => {
       });
   };
 
+  //styles
+const Controls = styled.div `
+${'' /* border: 1px dashed grey; */}
+display:flex;
+justify-content: space-between;
+margin: 0 1% 0 1%;
+`
+
+  const Task = styled.div`
+${'' /* border: 1px dashed grey; */}
+`
+
+
   return (
     <>
+    <Controls>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Task</label>
+        <label htmlFor="name">New Task</label>
         <input
           id="name"
           name="name"
@@ -86,18 +101,21 @@ const ToDo = () => {
           value={input.name}
           onChange={handleChanges}
         />
-
-        <button type="submit">Submit</button>
-        <button onClick={removeAll}>Delete Completed</button>
+        <button type="submit">Add</button>
       </form>
+      <button onClick={removeAll}>Delete Completed Tasks</button>
+    </Controls>
 
-      {tasks.map(i => (
-        <div className={i.is_complete ? "completed" : null}>
-          <h1>{i.name}</h1>
-          <button onClick={() => markComplete(i.id, i.is_complete)}>complete</button>
-          <button onClick={() => remove(i.id)}>delete</button>
-        </div>
-      ))}
+
+      <Task>
+        {tasks.map(i => (
+          <div className={i.is_complete ? "completed" : null}>
+            <h1>{i.name}</h1>
+            <button onClick={() => markComplete(i.id, i.is_complete)}>Task Completed</button>
+            <button onClick={() => remove(i.id)}>Delete Task</button>
+          </div>
+        ))}
+      </Task>
     </>
   );
 };

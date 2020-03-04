@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
 const Login = () => {
   const [user, setUser] = useState({});
-const history = useHistory();
+  const history = useHistory();
 
 
   const handleChange = event => {
@@ -15,7 +15,7 @@ const history = useHistory();
       [event.target.name]: event.target.value
     });
   };
-  
+
   const login = () => {
     axios
       .post("https://wunderlistbuild.herokuapp.com/api/auth/login", user)
@@ -28,17 +28,17 @@ const history = useHistory();
       .catch(error => {
         console.error(error);
       });
-     
-  };
-  
-  const handleSubmit = (event) => {
-      event.preventDefault();
-      login(user)
-  };
-  
 
-    // styles
-    const Form = styled.form`
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login(user)
+  };
+
+
+  // styles
+  const Form = styled.form`
     margin: 10% 65% 40% 2% ;
     background:#A0A2A3;
     border-radius: 10px;
@@ -47,12 +47,12 @@ const history = useHistory();
 
     `;
 
-    const NewUser = styled.div `
+  const NewUser = styled.div`
     margin-top: 40%;
     `
-    return (
-        <div className="login-form">
-        {console.log(user)}
+  return (
+    <div className="login-form">
+      {console.log(user)}
       <Form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Username</label>
@@ -65,8 +65,8 @@ const history = useHistory();
             onChange={handleChange}
             value={user.username}
           />
-              </div>
-          
+        </div>
+
         <div>
           <label htmlFor="password">Password</label>
           <input
@@ -82,14 +82,8 @@ const history = useHistory();
           Login
         </button>
 
-        <div>
-          New User? sign up here
-          <Link to="/signup"> Sign Up</Link>
-        </div>
-      </form>
-      
         <NewUser>
-          <h3>New User?</h3>
+          <h3>Dont have an account?</h3>
           <Link to="/signUp"> <button>Sign Up Here</button></Link>
         </NewUser>
       </Form>

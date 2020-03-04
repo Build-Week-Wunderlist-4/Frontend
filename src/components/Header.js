@@ -21,7 +21,7 @@ const Header = () =>  {
     <header>
       <h1>Wunderlist</h1>
       {localStorage.getItem("token") ? (
-            <button onClick={}>
+            <button >
               Log Out
             </button>
           ) : null}
