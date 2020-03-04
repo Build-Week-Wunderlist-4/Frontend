@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
 import './App.css';
-// import AxiosWithAuth from './utils/AxiosWithAuth';
-// import axios from 'axios';
 import { BrowserRouter as  Router, Route, Switch } from "react-router-dom";
-// import { useHistory } from 'react-router-dom';
+
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Todo from './components/ToDo'
+import Header from './components/Header';
 
-// import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
  
-
-  
+ 
   return (
     <div className="App">
+      
+      <Header />
+
       <Router>
  
     <Route exact path="/">
@@ -28,9 +29,9 @@ function App() {
       <SignUp />
     </Route>
         
-    <Route path="/todo">
+    <PrivateRoute path="/todo">
      <Todo />
-        </Route>
+        </PrivateRoute>
           
         </Switch>
         </Router>
