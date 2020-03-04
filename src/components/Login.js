@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
 import styled from "styled-components";
-const Login = ({login}) => {
-  const [user, setUser] = useState({
-    
-  });
+const Login = () => {
+  const [user, setUser] = useState({});
+  const history = useHistory();
+
 
   const handleChange = event => {
     setUser({
@@ -13,13 +16,29 @@ const Login = ({login}) => {
     });
   };
 
-  const handleSubmit = (event) => {
-      event.preventDefault();
-      login(user)
-    };
+  const login = () => {
+    axios
+      .post("https://wunderlistbuild.herokuapp.com/api/auth/login", user)
+      .then(res => {
+        console.log('thi', res.data);
+        localStorage.setItem('token', res.data.token);
+        // setUser(user.username);
+        history.push('/todo')
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
-    // styles
-    const Form = styled.form`
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    login(user)
+  };
+
+
+  // styles
+  const Form = styled.form`
     margin: 10% 65% 40% 2% ;
     background:#A0A2A3;
     border-radius: 10px;
@@ -28,12 +47,12 @@ const Login = ({login}) => {
 
     `;
 
-    const NewUser = styled.div `
+  const NewUser = styled.div`
     margin-top: 40%;
     `
-    return (
-        <div className="login-form">
-        {console.log(user)}
+  return (
+    <div className="login-form">
+      {console.log(user)}
       <Form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Username</label>
@@ -46,8 +65,8 @@ const Login = ({login}) => {
             onChange={handleChange}
             value={user.username}
           />
-              </div>
-          
+        </div>
+
         <div>
           <label htmlFor="password">Password</label>
           <input
@@ -62,9 +81,9 @@ const Login = ({login}) => {
         <button className="login button" type="login">
           Login
         </button>
-      
+
         <NewUser>
-          <h3>Ready to get stuff done?</h3>
+          <h3>Dont have an account?</h3>
           <Link to="/signUp"> <button>Sign Up Here</button></Link>
         </NewUser>
       </Form>

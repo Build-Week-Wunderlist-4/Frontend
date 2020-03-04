@@ -1,53 +1,59 @@
 import React, {useState} from 'react';
 import './App.css';
-import axios from 'axios';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { useHistory } from 'react-router-dom';
+import { BrowserRouter as  Router, Route, Switch } from "react-router-dom";
+
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Test from './components/Test';
+import Todo from './components/ToDo'
+import Header from './components/Header';
 
-
-// import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  const [user, setUser] = useState({});
-  const history = useHistory();
-  console.log('user!', user)
-  const login = (data) => {
-    
-     axios
-      .post("https://airbnbclonedevin.herokuapp.com/auth/login", data)
-       .then(res => {
-         setUser(res);
-         history.push('/test')
-      })
-      .catch(error => {
-        console.error(error);
-      });
-    
-  }
-
-
-
-
+ 
+ 
   return (
     <div className="App">
       
+      <Header />
+
+      <Router>
  
     <Route exact path="/">
-      <Login login={login} />
+      <Login />
     </Route>
      
-    <Route path="/signUp">
+        
+      <Switch>
+    <Route path="/signup">
       <SignUp />
     </Route>
         
-    <Route path="/test">
-     <Test />
-    </Route>
+    <PrivateRoute path="/todo">
+     <Todo />
+        </PrivateRoute>
+          
+        </Switch>
+        </Router>
       </div>
   );
 }
 
 export default App;
+
+  // const login = () => {
+    
+  //    axios
+  //     .post("https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/login", user, {
+  //       headers: { "Access-Control-Allow-Origin": "*" }
+  //     })
+  //      .then(res => {
+  //        localStorage.setItem('token', res.data.getToken);
+  //        setUser(user.username);
+  //        history.push('/todo')
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //     });
+    
+  // }
