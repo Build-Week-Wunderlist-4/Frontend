@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+
 import styled from "styled-components";
-const Login = ({login}) => {
-  const [user, setUser] = useState({
-    
-  });
+const Login = () => {
+  const [user, setUser] = useState({});
+const history = useHistory();
+
 
   const handleChange = event => {
     setUser({
@@ -12,11 +15,27 @@ const Login = ({login}) => {
       [event.target.name]: event.target.value
     });
   };
-
+  
+  const login = () => {
+    axios
+      .post("https://wunderlistbuild.herokuapp.com/api/auth/login", user)
+      .then(res => {
+        console.log('thi', res.data);
+        localStorage.setItem('token', res.data.token);
+        // setUser(user.username);
+        history.push('/todo')
+      })
+      .catch(error => {
+        console.error(error);
+      });
+     
+  };
+  
   const handleSubmit = (event) => {
       event.preventDefault();
       login(user)
-    };
+  };
+  
 
     // styles
     const Form = styled.form`
@@ -62,6 +81,12 @@ const Login = ({login}) => {
         <button className="login button" type="login">
           Login
         </button>
+
+        <div>
+          New User? sign up here
+          <Link to="/signup"> Sign Up</Link>
+        </div>
+      </form>
       
         <NewUser>
           <h3>New User?</h3>
