@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
@@ -22,16 +22,18 @@ const SignUp = () => {
 
   const register = event => {
     event.preventDefault();
-   
-    axios
-        .post(
-            'https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register', user, {
-                headers: {'Access-Control-Allow-Origin' : '*'}
-              })
 
-        // "https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register")
-        .then(res => {
-            console.log(res);
+    axios
+      .post(
+        "https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register",
+        user,
+        {
+          headers: { "Access-Control-Allow-Origin": "*" }
+        }
+      )
+
+      .then(res => {
+        console.log(res);
         history.push("/");
       })
       .catch(error => {

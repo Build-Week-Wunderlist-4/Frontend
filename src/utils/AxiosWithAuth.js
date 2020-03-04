@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-function axiosWithAuth()
+function AxiosWithAuth()
 {
     return axios.create({
-        baseURL: 'https://wunderlistbuild.herokuapp.com/api',
+        baseURL: 'https://wunderlistbuild.herokuapp.com/',
         headers: {
             authorization: localStorage.getItem('token')
         }
     })
 }
 
-export default axiosWithAuth;
+export default AxiosWithAuth;

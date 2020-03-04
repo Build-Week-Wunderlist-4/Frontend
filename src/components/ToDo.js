@@ -1,32 +1,35 @@
 import React, { useState } from "react";
 
-const ToDo = props => {
+const ToDo = () => {
   const [input, setInput] = useState({
-    Task: ""
+    task: ""
   });
 
   const handleChanges = e => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value
+    });
   };
 
-  const submitTask = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    //
+    
   };
 
   return (
-    <form onSubmit={submitTask}>
-      <label htmlFor="Task">Task</label>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="task">Task</label>
       <input
-        id="Task"
-        name="Task"
+        id="task"
+        name="task"
         type="text"
         placeholder="Get this done"
         value={input.name}
         onChange={handleChanges}
       />
 
-      <button type="submit">Submit</button>
+      <button>Submit</button>
     </form>
   );
 };
