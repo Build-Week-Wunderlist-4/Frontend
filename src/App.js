@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 // import AxiosWithAuth from './utils/AxiosWithAuth';
-import axios from 'axios';
+// import axios from 'axios';
 import { BrowserRouter as  Router, Route, Switch } from "react-router-dom";
 // import { useHistory } from 'react-router-dom';
 import Login from "./components/Login";
@@ -11,9 +11,6 @@ import Todo from './components/ToDo'
 // import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  const [user, setUser] = useState({});
-  // const history = useHistory();
-  console.log('user!', user)
  
 
   
