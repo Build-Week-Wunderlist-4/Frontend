@@ -22,17 +22,16 @@ const SignUp = () => {
 
   const register = event => {
     event.preventDefault();
-    const loginUser = {
-      username: user.username,
-      password: user.password,
-      email: user.email
-    };
+   
     axios
-      .post(
-        "https://wunderlistbuild.herokuapp.com/api/auth/register",
-        loginUser
-      )
-      .then(res => {
+        .post(
+            'https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register', user, {
+                headers: {'Access-Control-Allow-Origin' : '*'}
+              })
+
+        // "https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register")
+        .then(res => {
+            console.log(res);
         history.push("/");
       })
       .catch(error => {

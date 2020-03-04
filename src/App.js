@@ -6,8 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Test from './components/Test';
-
+import Todo from './components/ToDo'
 
 // import PrivateRoute from './components/PrivateRoute';
 
@@ -23,7 +22,7 @@ function App() {
        .then(res => {
          localStorage.setItem('token', res.data.getToken);
          setUser(user.username);
-         history.push('/test')
+         history.push('/todo')
       })
       .catch(error => {
         console.error(error);
@@ -44,8 +43,8 @@ function App() {
       <SignUp />
     </Route>
         
-    <Route path="/test">
-     <Test />
+    <Route path="/todo">
+     <Todo />
     </Route>
       </div>
   );
