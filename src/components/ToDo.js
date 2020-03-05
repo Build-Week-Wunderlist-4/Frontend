@@ -34,8 +34,10 @@ const ToDo = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    // temporarily adding 1000ms to test re-occuring
     AxiosWithAuth()
-      .post("api/tasks", input)
+      .post("api/tasks", { ...input, repeat_condition: 1000 })
       .then(res => {
         setBool(!bool);
       })
@@ -83,8 +85,6 @@ const ToDo = () => {
 
   const editTask = id => {
     setUpdate({ is_edit: !update.is_edit, item_id: id });
-
-    console.log(update);
   };
 
   const submitEdit = () => {
@@ -118,17 +118,22 @@ const ToDo = () => {
         <button type="submit">Submit</button>
         <button onClick={removeAll}>Delete Completed</button>
       </form>
-
       {tasks.map(i => (
         <div
           key={i.id}
           className={`item-list ${i.is_complete ? "completed" : null}`}
         >
+          {/* TODO: Remove 'completed' class when 1000ms has expired */}
+
           <h5>Task name: {i.name}</h5>
 
           {update.item_id === i.id && update.is_edit ? (
             <>
-              <input name="updatedTask" onChange={handleUpdate} />
+              <input
+                name="updatedTask"
+                onChange={handleUpdate}
+                value={update.updatedTask}
+              />
               <button onClick={submitEdit}>Update</button>
             </>
           ) : (
