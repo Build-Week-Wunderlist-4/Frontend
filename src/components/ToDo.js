@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
-import { useHistory } from "react-router-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import UpdateTodo from "./UpdateTodo";
 
 const ToDo = () => {
-  const history = useHistory();
   const [input, setInput] = useState({});
   const [tasks, setTasks] = useState([]);
   const [bool, setBool] = useState(true);
@@ -98,7 +94,7 @@ const ToDo = () => {
         is_complete: 0
       })
       .then(res => {
-        // If successful, refresh the page
+        window.location.reload();
       })
       .catch(err => {
         console.log("error", err);
@@ -122,6 +118,7 @@ const ToDo = () => {
         <button type="submit">Submit</button>
         <button onClick={removeAll}>Delete Completed</button>
       </form>
+
       {tasks.map(i => (
         <div
           key={i.id}
@@ -144,12 +141,9 @@ const ToDo = () => {
           <button onClick={() => markComplete(i.id, i.is_complete)}>
             complete
           </button>
-          <button onClick={() => remove(i.id)}>delete</button>
+          <button onClick={() => remove(i.id)}>X</button>
         </div>
       ))}
-      <Route path="/update">
-        <UpdateTodo tasks={tasks} setTasks={setTasks} />
-      </Route>
     </>
   );
 };
