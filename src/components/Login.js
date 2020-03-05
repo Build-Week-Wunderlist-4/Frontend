@@ -1,23 +1,43 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
-
 import { useHistory } from 'react-router-dom';
 
 import styled from "styled-components";
-
+import Header from "./Header"
+import BackgroundImage from "./pins.jpg"
+//background Styles
+const LoginBackground = styled.div`
+  background: url(${BackgroundImage}) no-repeat center center fixed; 
+  background-size: cover;    
+  height:100vh;
+  overflow-y:hidden;
+`
 // styles
 const Form = styled.form`
-  margin: 10% 65% 40% 2% ;
-  background:#A0A2A3;
+font-weight:bold;
+font-size: 1.5em;
+color:rgb(255,255,255,.5);
+  margin: 10% 70% 40% 2% ;
+  background-color: rgb(211,0,0,.4);
+    box-shadow: 2px 2px 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 5%;
   font-family: 'Spartan', sans-serif;
-
-  `;
-
+  `
+const Button = styled.button `
+font-size:1rem;
+font-weight:bold;
+padding: 2% 10%;
+background-color: rgb(255,255,255,.5);
+    background-repeat:no-repeat;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor:pointer;
+    overflow: hidden; 
+`
 const NewUser = styled.div`
-  margin-top: 40%;`
+  margin-top: 50%;`
 
 
 const Login = () => {
@@ -50,45 +70,50 @@ const Login = () => {
     login();
   };
 
-    
   return (
-    <div className="login-form">
-      {console.log(user)}
-      <Form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Username</label>
-          <br></br>
-          <input
-            id="username"
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={handleChange}
-            value={user.username}
-          />
-        </div>
+    <>
+     <LoginBackground>
+     <Header/>
+        <div className="login-form">
+        {console.log(user)}
+        <Form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name">Username</label>
+           
+            <input
+              id="username"
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={handleChange}
+              value={user.username}
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            value={user.password}
-          />
-        </div>
-        <button className="login button" type="login">
-          Login
-        </button>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              value={user.password}
+            />
+          </div>
+          <Button className="login button" type="login">
+            Login
+        </Button>
 
-        <NewUser>
-          <h3>Dont have an account?</h3>
-          <Link to="/signUp"> <button>Sign Up Here</button></Link>
-        </NewUser>
-      </Form>
-    </div>
+          <NewUser>
+            <h3>Dont have an account?</h3>
+            <Link to="/signUp"> <Button>Sign Up Here</Button></Link>
+          </NewUser>
+        </Form>
+      </div>
+     </LoginBackground>
+     
+    </>
   );
 };
 export default Login;

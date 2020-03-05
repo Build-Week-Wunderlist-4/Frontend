@@ -1,18 +1,52 @@
 import React, { useState, useEffect } from "react";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
 import styled from "styled-components";
+import Header from "./Header"
+import Background from "./colors1.jpg"
 
 //styles
 const Controls = styled.div`
-  ${"" /* border: 1px dashed grey; */}
-  display:flex;
-  justify-content: space-between;
-  margin: 0 1% 0 1%;
-`;
-
+${'' /* border: 1px dashed grey; */}
+display:flex;
+justify-content: space-between;
+margin: 0 2% 0 2%;
+`
+const BackgroundImage = styled.div`
+  background: url(${Background}) no-repeat center center fixed; 
+  background-size: cover;    
+  height:100vh;
+  overflow-y:hidden;
+`
 const Task = styled.div`
-  ${"" /* border: 1px dashed grey; */}
-`;
+${'' /* border: 1px dashed grey; */}
+`
+const TaskFont = styled.button`
+font-family: 'Baloo Chettan', cursive;
+font-size:100%;
+
+background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor:pointer;
+    overflow: hidden; 
+`
+const AddText = styled.label`
+font-family: 'Baloo Chettan', cursive;
+Font-size: 1.5em;
+`
+
+const AddButton = styled.button`
+font-family: 'Baloo Chettan', cursive;
+font-size:1em;
+background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor:pointer;
+    overflow: hidden; 
+`
+
 
 const ToDo = () => {
   const [input, setInput] = useState({});
@@ -52,7 +86,7 @@ const ToDo = () => {
       .post("api/tasks", input)
       .then(res => {
         setBool(!bool);
-        setInput({ value: '' });
+        setInput({ value: null });
       })
       .catch(err => {
         console.log("error", err);
@@ -117,11 +151,13 @@ const ToDo = () => {
 
   
 
+
   return (
-    <>
+    <BackgroundImage>
+      <Header />
       <Controls>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="name">New Task</label>
+          <AddText htmlFor="name">New Task </AddText>
           <input
             id="name"
             name="name"
@@ -134,9 +170,10 @@ const ToDo = () => {
             Daily
           </button> */}
 
-          <button type="submit">Add</button>
-          <button onClick={removeAll}>Delete Completed Tasks</button>
+          <AddButton type="submit">Add</AddButton>
+           <TaskFont onClick={removeAll}>Delete Completed Tasks</TaskFont>
         </form>
+      </Controls>
 
         <Task>
           {tasks.map(i => (
@@ -153,23 +190,23 @@ const ToDo = () => {
                     onChange={handleUpdate}
                     value={update.updatedTask}
                   />
-                  <button onClick={submitEdit}>Update</button>
+                  <TaskFont onClick={submitEdit}>Update</TaskFont>
                 </>
               ) : (
                 ""
               )}
-              <button onClick={() => editTask(i.id)}>
+              <TaskFont onClick={() => editTask(i.id)}>
                 {update.item_id === i.id && update.is_edit ? "cancel" : "edit"}
-              </button>
-              <button onClick={() => markComplete(i.id, i.is_complete)}>
+              </TaskFont>
+              <TaskFont onClick={() => markComplete(i.id, i.is_complete)}>
                 complete
-              </button>
-              <button onClick={() => remove(i.id)}>X</button>
+              </TaskFont>
+              <TaskFont onClick={() => remove(i.id)}>X</TaskFont>
             </div>
           ))}
         </Task>
-      </Controls>
-    </>
+        </BackgroundImage>
+    
   );
 };
 
