@@ -132,7 +132,9 @@ const ToDo = () => {
         />
           <button type="submit">Add</button>
           <button onClick={removeAll}>Delete Completed Tasks</button>
-      </form>
+        </form>
+        
+        <Task>
       {tasks.map(i => (
         <div
           key={i.id}
@@ -142,6 +144,7 @@ const ToDo = () => {
 
           <h5>Task name: {i.name}</h5>
 
+        {/* edit button */}
           {update.item_id === i.id && update.is_edit ? (
             <>
               <input
@@ -153,30 +156,27 @@ const ToDo = () => {
             </>
           ) : (
             ""
-          )}
+            )}
 
           <button onClick={() => editTask(i.id)}>
             {update.item_id === i.id && update.is_edit ? "cancel" : "edit"}
           </button>
+
+          
           <button onClick={() => markComplete(i.id, i.is_complete)}>
             complete
           </button>
           <button onClick={() => remove(i.id)}>X</button>
         </div>
       ))}
+          </Task>
      
     </Controls>
 
 
-      <Task>
-        {tasks.map(i => (
-          <div className={i.is_complete ? "completed" : null}>
-            <h1>{i.name}</h1>
-            <button onClick={() => markComplete(i.id, i.is_complete)}>Task Completed</button>
-            <button onClick={() => remove(i.id)}>Delete Task</button>
-          </div>
-        ))}
-      </Task>
+     
+        
+    
   </>  
   );
 };
