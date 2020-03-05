@@ -6,10 +6,10 @@ import styled from "styled-components";
 
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
-import Todo from './components/ToDo'
-import Header from './components/Header';
+import Todo from "./components/ToDo";
+import Header from "./components/Header";
 
-import PrivateRoute from './components/PrivateRoute';
+import PrivateRoute from "./components/PrivateRoute";
 
       
 //background Styles

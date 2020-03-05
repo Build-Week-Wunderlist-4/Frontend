@@ -1,9 +1,25 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
+import AxiosWithAuth from "../utils/AxiosWithAuth";
+
 import { useHistory } from 'react-router-dom';
 
 import styled from "styled-components";
+
+// styles
+const Form = styled.form`
+  margin: 10% 70% 40% 2% ;
+  background:#A0A2A3;
+  border-radius: 10px;
+  padding: 5%;
+  font-family: 'Spartan', sans-serif;
+
+  `;
+
+const NewUser = styled.div`
+  margin-top: 50%;`
+
+
 const Login = () => {
   const [user, setUser] = useState({});
   const history = useHistory();
@@ -17,40 +33,23 @@ const Login = () => {
   };
 
   const login = () => {
-    axios
-      .post("https://wunderlistbuild.herokuapp.com/api/auth/login", user)
+
+    AxiosWithAuth()
+      .post("/api/auth/login", user)
       .then(res => {
-        console.log('thi', res.data);
         localStorage.setItem('token', res.data.token);
-        // setUser(user.username);
-        history.push('/todo')
+        history.push("/todo");
       })
       .catch(error => {
         console.error(error);
       });
-
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = event => {
     event.preventDefault();
-    login(user)
+    login();
   };
 
-
-  // styles
-  const Form = styled.form`
-    margin: 10% 65% 40% 2% ;
-    background:#A0A2A3;
-    border-radius: 10px;
-    padding: 5%;
-    font-family: 'Spartan', sans-serif;
-z-index:10;
-    `;
- 
-
-  const NewUser = styled.div`
-    margin-top: 40%;
-    `
   return (
     <>
      
@@ -59,7 +58,7 @@ z-index:10;
         <Form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name">Username</label>
-            <br></br>
+           
             <input
               id="username"
               type="text"
