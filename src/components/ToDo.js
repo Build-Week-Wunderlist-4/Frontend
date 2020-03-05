@@ -20,12 +20,12 @@ const ToDo = () => {
   const [bool, setBool] = useState(true);
   const [update, setUpdate] = useState({});
 
-  // useEffect runs AFTER the entire page loads...
   useEffect(() => {
     AxiosWithAuth()
       .get("api/tasks")
       .then(response => {
-        console.log(response);
+    
+
         setTasks(response.data);
       })
       .catch(err => {
@@ -38,25 +38,27 @@ const ToDo = () => {
       ...input,
       [e.target.name]: e.target.value
     });
-    console.log(input);
   };
 
   const handleUpdate = e => {
     setUpdate({ ...update, [e.target.name]: e.target.value });
   };
 
+
+
   const handleSubmit = e => {
     e.preventDefault();
-
     AxiosWithAuth()
       .post("api/tasks", input)
       .then(res => {
         setBool(!bool);
+        setInput({ value: '' });
       })
       .catch(err => {
         console.log("error", err);
       });
   };
+
 
   const remove = id => {
     AxiosWithAuth()
@@ -84,8 +86,7 @@ const ToDo = () => {
   const markComplete = (id, status) => {
     AxiosWithAuth()
       .put(`api/tasks/${id}`, {
-        is_complete: !status,
-        repeat_condition: Date()
+        is_complete: !status
       })
       .then(res => {
         console.log(res);
@@ -114,12 +115,7 @@ const ToDo = () => {
       });
   };
 
-  const setSchedule = occur => {
-    setInput({
-      ...input,
-      repeat: occur
-    });
-  };
+  
 
   return (
     <>
@@ -134,33 +130,9 @@ const ToDo = () => {
             value={input.name}
             onChange={handleChanges}
           />
-          <button
-            onClick={e => {
-              e.preventDefault();
-              setSchedule("daily");
-            }}
-            className="scheduled"
-          >
-            D
-          </button>
-          <button
-            onClick={e => {
-              e.preventDefault();
-              setSchedule("weekly");
-            }}
-            className="scheduled"
-          >
-            W
-          </button>
-          <button
-            onClick={e => {
-              e.preventDefault();
-              setSchedule("monthly");
-            }}
-            className="scheduled"
-          >
-            M
-          </button>
+          {/* <button onClick={setSchedule} className="scheduled">
+            Daily
+          </button> */}
 
           <button type="submit">Add</button>
           <button onClick={removeAll}>Delete Completed Tasks</button>
@@ -169,12 +141,11 @@ const ToDo = () => {
         <Task>
           {tasks.map(i => (
             <div
-              key={i.id}
-              className={`item-list ${i.is_complete ? "completed" : null}`}
+            key={i.id}
+            className={`item-list ${i.is_complete ? "completed" : null}`}
             >
-              {/* TODO: Remove 'completed' class when 1000ms has expired */}
-              <h5> {i.name} </h5> <p>{i.repeat}</p>
-              {/* edit button */}
+              <h3> {i.name} </h3>{" "}
+              {/* <p>{i.repeat_condition === 1 ? "Daily" : ""}</p> */}
               {update.item_id === i.id && update.is_edit ? (
                 <>
                   <input
@@ -203,3 +174,19 @@ const ToDo = () => {
 };
 
 export default ToDo;
+
+// const setSchedule = e => {
+  //   e.preventDefault();
+  //   setInput({
+  //     ...input,
+  //     repeat_condition: 1
+  //   });
+  // };
+
+    // let todayDate = new Date();
+        // let todayHour = todayDate.getHours();
+        // response.data.forEach(item => {
+        //  if (item.repeat_condition === 1 && todayHour === 14) {
+        // console.log("This is where I need to reset it to 0");
+        //   }
+        // });

@@ -13,9 +13,8 @@
   }
 }
 
-
 .completed {
-  background-color: aquamarine;
+  opacity: 0.25;
 }
 .App-header {
   background-color: #282c34;
