@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
-import { useHistory } from 'react-router-dom';
-
+import AxiosWithAuth from "../utils/AxiosWithAuth";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [user, setUser] = useState({});
-const history = useHistory();
+  const history = useHistory();
 
   const handleChange = event => {
     setUser({
@@ -16,29 +15,27 @@ const history = useHistory();
   };
   
   const login = () => {
-    axios
-      .post("https://wunderlistbuild.herokuapp.com/api/auth/login", user)
+
+    AxiosWithAuth()
+      .post("/api/auth/login", user)
       .then(res => {
-        console.log('thi', res.data);
         localStorage.setItem('token', res.data.token);
-        // setUser(user.username);
-        history.push('/todo')
+        history.push("/todo");
       })
       .catch(error => {
         console.error(error);
       });
-     
   };
-  
-  const handleSubmit = (event) => {
-      event.preventDefault();
-      login(user)
-  };
-  
 
-    return (
-        <div className="login-form">
-        {console.log(user)}
+  const handleSubmit = event => {
+    event.preventDefault();
+    login();
+  };
+
+  return (
+
+    <div className="login-form">
+      {console.log("!",user)}
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Username</label>
@@ -50,8 +47,8 @@ const history = useHistory();
             onChange={handleChange}
             value={user.username}
           />
-              </div>
-          
+        </div>
+
         <div>
           <label htmlFor="password">Password</label>
           <input
