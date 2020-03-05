@@ -9,7 +9,7 @@ const Controls = styled.div`
 ${'' /* border: 1px dashed grey; */}
 display:flex;
 justify-content: space-between;
-margin: 0 1% 0 1%;
+margin: 0 2% 0 2%;
 `
 const BackgroundImage = styled.div`
   background: url(${Background}) no-repeat center center fixed; 
@@ -38,6 +38,7 @@ Font-size: 1.5em;
 
 const AddButton = styled.button`
 font-family: 'Baloo Chettan', cursive;
+font-size:1em;
 background-color: Transparent;
     background-repeat:no-repeat;
     border: 1px solid black;

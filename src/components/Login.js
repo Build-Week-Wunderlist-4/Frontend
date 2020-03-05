@@ -15,14 +15,27 @@ const LoginBackground = styled.div`
 `
 // styles
 const Form = styled.form`
+font-weight:bold;
+font-size: 1.5em;
+color:rgb(255,255,255,.5);
   margin: 10% 70% 40% 2% ;
-  background-color: rgb(211,211,211,.4);
+  background-color: rgb(211,0,0,.4);
     box-shadow: 2px 2px 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 5%;
   font-family: 'Spartan', sans-serif;
   `
-
+const Button = styled.button `
+font-size:1rem;
+font-weight:bold;
+padding: 2% 10%;
+background-color: rgb(255,255,255,.5);
+    background-repeat:no-repeat;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor:pointer;
+    overflow: hidden; 
+`
 const NewUser = styled.div`
   margin-top: 50%;`
 
@@ -88,13 +101,13 @@ const Login = () => {
               value={user.password}
             />
           </div>
-          <button className="login button" type="login">
+          <Button className="login button" type="login">
             Login
-        </button>
+        </Button>
 
           <NewUser>
             <h3>Dont have an account?</h3>
-            <Link to="/signUp"> <button>Sign Up Here</button></Link>
+            <Link to="/signUp"> <Button>Sign Up Here</Button></Link>
           </NewUser>
         </Form>
       </div>
