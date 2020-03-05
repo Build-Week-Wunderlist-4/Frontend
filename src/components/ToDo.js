@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
 import styled from "styled-components";
 
-
 //styles
-const Controls = styled.div `
-${'' /* border: 1px dashed grey; */}
-display:flex;
-justify-content: space-between;
-margin: 0 1% 0 1%;
-`
+const Controls = styled.div`
+  ${"" /* border: 1px dashed grey; */}
+  display:flex;
+  justify-content: space-between;
+  margin: 0 1% 0 1%;
+`;
 
 const Task = styled.div`
-${'' /* border: 1px dashed grey; */}
-`
+  ${"" /* border: 1px dashed grey; */}
+`;
 
 const ToDo = () => {
   const [input, setInput] = useState({});
@@ -39,7 +38,6 @@ const ToDo = () => {
       ...input,
       [e.target.name]: e.target.value
     });
-
     console.log(input);
   };
 
@@ -50,9 +48,8 @@ const ToDo = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    // temporarily adding 1000ms to test re-occuring
     AxiosWithAuth()
-      .post("api/tasks", { ...input, repeat_condition: 1000 })
+      .post("api/tasks", input)
       .then(res => {
         setBool(!bool);
       })
@@ -87,7 +84,8 @@ const ToDo = () => {
   const markComplete = (id, status) => {
     AxiosWithAuth()
       .put(`api/tasks/${id}`, {
-        is_complete: !status
+        is_complete: !status,
+        repeat_condition: Date()
       })
       .then(res => {
         console.log(res);
@@ -116,68 +114,91 @@ const ToDo = () => {
       });
   };
 
+  const setSchedule = occur => {
+    setInput({
+      ...input,
+      repeat: occur
+    });
+  };
+
   return (
     <>
- 
-    <Controls>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">New Task</label>
-        <input
-          id="name"
-          name="name"
-          type="name"
-          placeholder="Get this done"
-          value={input.name}
-          onChange={handleChanges}
-        />
+      <Controls>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">New Task</label>
+          <input
+            id="name"
+            name="name"
+            type="name"
+            placeholder="Get this done"
+            value={input.name}
+            onChange={handleChanges}
+          />
+          <button
+            onClick={e => {
+              e.preventDefault();
+              setSchedule("daily");
+            }}
+            className="scheduled"
+          >
+            D
+          </button>
+          <button
+            onClick={e => {
+              e.preventDefault();
+              setSchedule("weekly");
+            }}
+            className="scheduled"
+          >
+            W
+          </button>
+          <button
+            onClick={e => {
+              e.preventDefault();
+              setSchedule("monthly");
+            }}
+            className="scheduled"
+          >
+            M
+          </button>
+
           <button type="submit">Add</button>
           <button onClick={removeAll}>Delete Completed Tasks</button>
         </form>
-        
+
         <Task>
-      {tasks.map(i => (
-        <div
-          key={i.id}
-          className={`item-list ${i.is_complete ? "completed" : null}`}
-        >
-          {/* TODO: Remove 'completed' class when 1000ms has expired */}
-
-          <h5>Task name: {i.name}</h5>
-
-        {/* edit button */}
-          {update.item_id === i.id && update.is_edit ? (
-            <>
-              <input
-                name="updatedTask"
-                onChange={handleUpdate}
-                value={update.updatedTask}
-              />
-              <button onClick={submitEdit}>Update</button>
-            </>
-          ) : (
-            ""
-            )}
-
-          <button onClick={() => editTask(i.id)}>
-            {update.item_id === i.id && update.is_edit ? "cancel" : "edit"}
-          </button>
-
-          
-          <button onClick={() => markComplete(i.id, i.is_complete)}>
-            complete
-          </button>
-          <button onClick={() => remove(i.id)}>X</button>
-        </div>
-      ))}
-          </Task>
-     
-    </Controls>
-
-
-     
-        
-    
-  </>  
+          {tasks.map(i => (
+            <div
+              key={i.id}
+              className={`item-list ${i.is_complete ? "completed" : null}`}
+            >
+              {/* TODO: Remove 'completed' class when 1000ms has expired */}
+              <h5> {i.name} </h5> <p>{i.repeat}</p>
+              {/* edit button */}
+              {update.item_id === i.id && update.is_edit ? (
+                <>
+                  <input
+                    name="updatedTask"
+                    onChange={handleUpdate}
+                    value={update.updatedTask}
+                  />
+                  <button onClick={submitEdit}>Update</button>
+                </>
+              ) : (
+                ""
+              )}
+              <button onClick={() => editTask(i.id)}>
+                {update.item_id === i.id && update.is_edit ? "cancel" : "edit"}
+              </button>
+              <button onClick={() => markComplete(i.id, i.is_complete)}>
+                complete
+              </button>
+              <button onClick={() => remove(i.id)}>X</button>
+            </div>
+          ))}
+        </Task>
+      </Controls>
+    </>
   );
 };
 
