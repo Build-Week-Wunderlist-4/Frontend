@@ -2,8 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-
 import axios from 'axios';
+import Header from "./Header"
+import BackgroundImage from "./pins.jpg"
+//background Styles
+const LoginBackground = styled.div`
+  background: url(${BackgroundImage}) no-repeat center center fixed; 
+  background-size: cover;    
+  height:100%;
+  overflow-y:hidden;
+`
 
 //styles
 const Form = styled.form`
@@ -62,6 +70,8 @@ const SignUp = () => {
     
 
     return (
+        <LoginBackground>
+             <Header/>
         <div className="login-form">
             {console.log(user)}
             <Form onSubmit={register}>
@@ -106,6 +116,8 @@ const SignUp = () => {
                 </Member>
             </Form>
         </div>
+        </LoginBackground>
+       
     );
 };
 

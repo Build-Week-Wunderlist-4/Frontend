@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
-
 import { useHistory } from 'react-router-dom';
 
 import styled from "styled-components";
-
+import Header from "./Header"
+import BackgroundImage from "./pins.jpg"
+//background Styles
+const LoginBackground = styled.div`
+  background: url(${BackgroundImage}) no-repeat center center fixed; 
+  background-size: cover;    
+  height:100%;
+  overflow-y:hidden;
+`
 // styles
 const Form = styled.form`
   margin: 10% 70% 40% 2% ;
@@ -13,7 +20,7 @@ const Form = styled.form`
   border-radius: 10px;
   padding: 5%;
   font-family: 'Spartan', sans-serif;
-
+  
   `;
 
 const NewUser = styled.div`
@@ -52,8 +59,9 @@ const Login = () => {
 
   return (
     <>
-     
-      <div className="login-form">
+     <LoginBackground>
+     <Header/>
+        <div className="login-form">
         {console.log(user)}
         <Form onSubmit={handleSubmit}>
           <div>
@@ -90,6 +98,8 @@ const Login = () => {
           </NewUser>
         </Form>
       </div>
+     </LoginBackground>
+     
     </>
   );
 };
