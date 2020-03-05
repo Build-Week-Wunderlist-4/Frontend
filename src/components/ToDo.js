@@ -2,18 +2,32 @@ import React, { useState, useEffect } from "react";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
 import styled from "styled-components";
 
+
+//styles
+const Controls = styled.div `
+${'' /* border: 1px dashed grey; */}
+display:flex;
+justify-content: space-between;
+margin: 0 1% 0 1%;
+`
+
+const Task = styled.div`
+${'' /* border: 1px dashed grey; */}
+`
+
 const ToDo = () => {
   const [input, setInput] = useState({});
-
   const [tasks, setTasks] = useState([]);
-
   const [bool, setBool] = useState(true);
+  const [update, setUpdate] = useState({});
 
+  // useEffect runs AFTER the entire page loads...
   useEffect(() => {
     AxiosWithAuth()
-      .get("https://wunderlistbuild.herokuapp.com/api/tasks")
-      .then(res => {
-        setTasks(res.data);
+      .get("api/tasks")
+      .then(response => {
+        console.log(response);
+        setTasks(response.data);
       })
       .catch(err => {
         console.log("error", err);
@@ -22,14 +36,23 @@ const ToDo = () => {
 
   const handleChanges = e => {
     setInput({
+      ...input,
       [e.target.name]: e.target.value
     });
+
+    console.log(input);
+  };
+
+  const handleUpdate = e => {
+    setUpdate({ ...update, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    // temporarily adding 1000ms to test re-occuring
     AxiosWithAuth()
-      .post("https://wunderlistbuild.herokuapp.com/api/tasks", input)
+      .post("api/tasks", { ...input, repeat_condition: 1000 })
       .then(res => {
         setBool(!bool);
       })
@@ -40,7 +63,7 @@ const ToDo = () => {
 
   const remove = id => {
     AxiosWithAuth()
-      .delete(`https://wunderlistbuild.herokuapp.com/api/tasks/${id}`)
+      .delete(`api/tasks/${id}`)
       .then(res => {
         setBool(!bool);
       })
@@ -51,7 +74,7 @@ const ToDo = () => {
 
   const removeAll = () => {
     AxiosWithAuth()
-      .delete(`https://wunderlistbuild.herokuapp.com/api/tasks/deletecompleted`)
+      .delete("api/tasks/deletecompleted")
       .then(res => {
         // console.log(res);
         setBool(!bool);
@@ -63,7 +86,7 @@ const ToDo = () => {
 
   const markComplete = (id, status) => {
     AxiosWithAuth()
-      .put(`https://wunderlistbuild.herokuapp.com/api/tasks/${id}`, {
+      .put(`api/tasks/${id}`, {
         is_complete: !status
       })
       .then(res => {
@@ -75,21 +98,27 @@ const ToDo = () => {
       });
   };
 
-  //styles
-const Controls = styled.div `
-${'' /* border: 1px dashed grey; */}
-display:flex;
-justify-content: space-between;
-margin: 0 1% 0 1%;
-`
+  const editTask = id => {
+    setUpdate({ is_edit: !update.is_edit, item_id: id });
+  };
 
-  const Task = styled.div`
-${'' /* border: 1px dashed grey; */}
-`
-
+  const submitEdit = () => {
+    AxiosWithAuth()
+      .put(`api/tasks/${update.item_id}`, {
+        name: update.updatedTask,
+        is_complete: 0
+      })
+      .then(res => {
+        window.location.reload();
+      })
+      .catch(err => {
+        console.log("error", err);
+      });
+  };
 
   return (
     <>
+ 
     <Controls>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">New Task</label>
@@ -101,22 +130,54 @@ ${'' /* border: 1px dashed grey; */}
           value={input.name}
           onChange={handleChanges}
         />
-        <button type="submit">Add</button>
-      </form>
-      <button onClick={removeAll}>Delete Completed Tasks</button>
+          <button type="submit">Add</button>
+          <button onClick={removeAll}>Delete Completed Tasks</button>
+        </form>
+        
+        <Task>
+      {tasks.map(i => (
+        <div
+          key={i.id}
+          className={`item-list ${i.is_complete ? "completed" : null}`}
+        >
+          {/* TODO: Remove 'completed' class when 1000ms has expired */}
+
+          <h5>Task name: {i.name}</h5>
+
+        {/* edit button */}
+          {update.item_id === i.id && update.is_edit ? (
+            <>
+              <input
+                name="updatedTask"
+                onChange={handleUpdate}
+                value={update.updatedTask}
+              />
+              <button onClick={submitEdit}>Update</button>
+            </>
+          ) : (
+            ""
+            )}
+
+          <button onClick={() => editTask(i.id)}>
+            {update.item_id === i.id && update.is_edit ? "cancel" : "edit"}
+          </button>
+
+          
+          <button onClick={() => markComplete(i.id, i.is_complete)}>
+            complete
+          </button>
+          <button onClick={() => remove(i.id)}>X</button>
+        </div>
+      ))}
+          </Task>
+     
     </Controls>
 
 
-      <Task>
-        {tasks.map(i => (
-          <div className={i.is_complete ? "completed" : null}>
-            <h1>{i.name}</h1>
-            <button onClick={() => markComplete(i.id, i.is_complete)}>Task Completed</button>
-            <button onClick={() => remove(i.id)}>Delete Task</button>
-          </div>
-        ))}
-      </Task>
-    </>
+     
+        
+    
+  </>  
   );
 };
 

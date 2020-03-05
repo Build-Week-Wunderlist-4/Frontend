@@ -3,7 +3,24 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
-import axios from "axios";
+import axios from 'axios';
+
+//styles
+const Form = styled.form`
+margin: 10% 70% 40% 2% ;
+background: #7A7F80;
+border-radius: 10px;
+padding: 5%;
+font-family: 'Spartan', sans-serif;
+color:white;
+`
+
+const Member = styled.div`
+margin-top: 40%;
+`
+const Button = styled.button `
+text-decoration:none;
+`
 
 const SignUp = () => {
     const [user, setUser] = useState({
@@ -11,7 +28,7 @@ const SignUp = () => {
         password: "",
         email: ""
     });
-
+    
     const history = useHistory();
 
     const handleChange = event => {
@@ -23,15 +40,15 @@ const SignUp = () => {
 
     const register = event => {
         event.preventDefault();
-
         axios
-            .post(
-                "https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register",
-                user,
-                {
-                    headers: { "Access-Control-Allow-Origin": "*" }
-                }
-            )
+        .post(
+            "https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register",
+            user,
+            {
+                headers: { "Access-Control-Allow-Origin": "*" }
+            }
+        )
+
 
             .then(res => {
                 console.log(res);
@@ -42,31 +59,16 @@ const SignUp = () => {
             });
     };
 
-    // styles
-    const Form = styled.form`
-    margin: 10% 70% 40% 2% ;
-    background: #7A7F80;
-    border-radius: 10px;
-    padding: 5%;
-    font-family: 'Spartan', sans-serif;
-    color:white;
-    `;
-
-    const Member = styled.div`
-    margin-top: 40%;
-    `
-    const Button = styled.button `
-    text-decoration:none;
-    `
+    
 
     return (
         <div className="login-form">
             {console.log(user)}
             <Form onSubmit={register}>
                 <div>
-                    <label htmlFor="name">Username</label>
+                    <label htmlFor="username">Username</label>
                     <input
-                        id="name"
+                        id="username"
                         type="text"
                         name="username"
                         placeholder="username"
@@ -86,7 +88,7 @@ const SignUp = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="email">email</label>
+                    <label htmlFor="email">Email</label>
                     <input
                         id="email"
                         type="email"
@@ -97,11 +99,10 @@ const SignUp = () => {
                     />
                 </div>
                 <button className="login button" type="login">
-                    Sign Up
-        </button>
+                    Sign Up</button>
                 <Member>
                     <h3> Already a member?</h3>
-                    <Link to="/"><Button>Login</Button></Link>
+                    <Button><Link to="/">Login</Link></Button>
                 </Member>
             </Form>
         </div>
