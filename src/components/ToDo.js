@@ -23,6 +23,13 @@ ${'' /* border: 1px dashed grey; */}
 const TaskFont = styled.button`
 font-family: 'Baloo Chettan', cursive;
 font-size:100%;
+
+background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor:pointer;
+    overflow: hidden; 
 `
 const AddText = styled.label`
 font-family: 'Baloo Chettan', cursive;
@@ -31,6 +38,12 @@ Font-size: 1.5em;
 
 const AddButton = styled.button`
 font-family: 'Baloo Chettan', cursive;
+background-color: Transparent;
+    background-repeat:no-repeat;
+    border: 1px solid black;
+    border-radius: 15px;
+    cursor:pointer;
+    overflow: hidden; 
 `
 
 

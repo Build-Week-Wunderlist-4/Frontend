@@ -15,13 +15,13 @@ const LoginBackground = styled.div`
 
 //styles
 const Form = styled.form`
-margin: 10% 70% 40% 2% ;
-background: #7A7F80;
-border-radius: 10px;
-padding: 5%;
-font-family: 'Spartan', sans-serif;
-color:white;
-`
+  margin: 10% 70% 40% 2% ;
+  background-color: rgb(211,211,211,.4);
+    box-shadow: 2px 2px 10px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 5%;
+  font-family: 'Spartan', sans-serif;
+  `
 
 const Member = styled.div`
 margin-top: 40%;
