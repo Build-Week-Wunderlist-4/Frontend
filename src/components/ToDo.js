@@ -1,28 +1,38 @@
 import React, { useState, useEffect } from "react";
 import AxiosWithAuth from "../utils/AxiosWithAuth";
 import styled from "styled-components";
-
+import Header from "./Header"
+import Background from "./colors1.jpg"
 
 //styles
-const Controls = styled.div `
+const Controls = styled.div`
 ${'' /* border: 1px dashed grey; */}
 display:flex;
 justify-content: space-between;
 margin: 0 1% 0 1%;
 `
-
+const BackgroundImage = styled.div`
+  background: url(${Background}) no-repeat center center fixed; 
+  background-size: cover;    
+  height:100vh;
+  overflow-y:hidden;
+`
 const Task = styled.div`
 ${'' /* border: 1px dashed grey; */}
 `
-// const LogOut = styled.button `
-// border: 1px dotted gray;
-// width:15%;
-// background: red;
-// color:black;
-// font-size: 30px;
-// border-radius:5%;
+const TaskFont = styled.button`
+font-family: 'Baloo Chettan', cursive;
+font-size:100%;
+`
+const AddText = styled.label`
+font-family: 'Baloo Chettan', cursive;
+Font-size: 1.5em;
+`
 
-// `
+const AddButton = styled.button`
+font-family: 'Baloo Chettan', cursive;
+`
+
 
 const ToDo = () => {
   const [input, setInput] = useState({});
@@ -108,11 +118,11 @@ const ToDo = () => {
   };
 
   return (
-    <>
-  
+    <BackgroundImage>
+      <Header />
       <Controls>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="name">New Task </label>
+          <AddText htmlFor="name">New Task </AddText>
           <input
             id="name"
             name="name"
@@ -121,9 +131,9 @@ const ToDo = () => {
             value={input.name}
             onChange={handleChanges}
           />
-          <button type="submit">Add</button>
+          <AddButton type="submit">Add</AddButton>
         </form>
-        <button onClick={removeAll}>Delete Completed Tasks</button>
+        <TaskFont onClick={removeAll}>Delete Completed Tasks</TaskFont>
       </Controls>
 
 
@@ -131,19 +141,12 @@ const ToDo = () => {
         {tasks.map(i => (
           <div className={i.is_complete ? "completed" : null}>
             <h1>{i.name}</h1>
-            <button onClick={() => markComplete(i.id, i.is_complete)}>Task Completed</button>
-            <button onClick={() => remove(i.id)}>Delete Task</button>
+            <TaskFont onClick={() => markComplete(i.id, i.is_complete)}>Task Completed</TaskFont>
+            <TaskFont onClick={() => remove(i.id)}>Delete Task</TaskFont>
           </div>
         ))}
       </Task>
-      {/* <footer>
-        {localStorage.getItem("token") ? (
-          <LogOut >
-            Log Out
-            </LogOut>
-        ) : null}
-      </footer> */}
-    </>
+    </BackgroundImage>
   );
 };
 

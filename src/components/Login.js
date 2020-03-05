@@ -10,7 +10,7 @@ import BackgroundImage from "./pins.jpg"
 const LoginBackground = styled.div`
   background: url(${BackgroundImage}) no-repeat center center fixed; 
   background-size: cover;    
-  height:100%;
+  height:100vh;
   overflow-y:hidden;
 `
 // styles

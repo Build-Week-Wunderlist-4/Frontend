@@ -16,11 +16,7 @@ const Header = () => {
   return (
     <header>
       <Title>Wunderlist</Title>
-      {localStorage.getItem("token") ? (
-            <button >
-              Log Out
-            </button>
-          ) : null}
+      
     </header>
   );
 };
