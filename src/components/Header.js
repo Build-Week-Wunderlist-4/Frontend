@@ -20,11 +20,11 @@ const Header = () =>  {
   return (
     <header>
       <h1>Wunderlist</h1>
-      {localStorage.getItem("token") ? (
+      {/* {localStorage.getItem("token") ? (
             <button >
               Log Out
             </button>
-          ) : null}
+          ) : null} */}
     </header>
   );
 }

@@ -76,7 +76,7 @@ const ToDo = () => {
   };
 
   //styles
-const Controls = styled.div `
+  const Controls = styled.div`
 ${'' /* border: 1px dashed grey; */}
 display:flex;
 justify-content: space-between;
@@ -87,24 +87,35 @@ margin: 0 1% 0 1%;
 ${'' /* border: 1px dashed grey; */}
 `
 
+const LogOut = styled.button `
+border: 1px dotted gray;
+width:15%;
+background: red;
+color:black;
+font-size: 30px;
+border-radius:5%;
+
+`
+
 
   return (
     <>
-    <Controls>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">New Task</label>
-        <input
-          id="name"
-          name="name"
-          type="name"
-          placeholder="Get this done"
-          value={input.name}
-          onChange={handleChanges}
-        />
-        <button type="submit">Add</button>
-      </form>
-      <button onClick={removeAll}>Delete Completed Tasks</button>
-    </Controls>
+  
+      <Controls>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="name">New Task </label>
+          <input
+            id="name"
+            name="name"
+            type="name"
+            placeholder="Get this done"
+            value={input.name}
+            onChange={handleChanges}
+          />
+          <button type="submit">Add</button>
+        </form>
+        <button onClick={removeAll}>Delete Completed Tasks</button>
+      </Controls>
 
 
       <Task>
@@ -116,6 +127,13 @@ ${'' /* border: 1px dashed grey; */}
           </div>
         ))}
       </Task>
+      <footer>
+        {localStorage.getItem("token") ? (
+          <LogOut >
+            Log Out
+            </LogOut>
+        ) : null}
+      </footer>
     </>
   );
 };

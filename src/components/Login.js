@@ -44,50 +44,54 @@ const Login = () => {
     border-radius: 10px;
     padding: 5%;
     font-family: 'Spartan', sans-serif;
-
+z-index:10;
     `;
+ 
 
   const NewUser = styled.div`
     margin-top: 40%;
     `
   return (
-    <div className="login-form">
-      {console.log(user)}
-      <Form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Username</label>
-          <br></br>
-          <input
-            id="username"
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={handleChange}
-            value={user.username}
-          />
-        </div>
+    <>
+     
+      <div className="login-form">
+        {console.log(user)}
+        <Form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="name">Username</label>
+            <br></br>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={handleChange}
+              value={user.username}
+            />
+          </div>
 
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            value={user.password}
-          />
-        </div>
-        <button className="login button" type="login">
-          Login
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChange}
+              value={user.password}
+            />
+          </div>
+          <button className="login button" type="login">
+            Login
         </button>
 
-        <NewUser>
-          <h3>Dont have an account?</h3>
-          <Link to="/signUp"> <button>Sign Up Here</button></Link>
-        </NewUser>
-      </Form>
-    </div>
+          <NewUser>
+            <h3>Dont have an account?</h3>
+            <Link to="/signUp"> <button>Sign Up Here</button></Link>
+          </NewUser>
+        </Form>
+      </div>
+    </>
   );
 };
 export default Login;
