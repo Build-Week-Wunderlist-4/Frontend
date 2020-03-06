@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 
@@ -10,9 +9,6 @@ text-align:center;
 font-family: 'Lobster', cursive;
 `
 const Header = () => {
-  const history = useHistory();
-
-
   return (
     <header>
       <Title>Wunderlist</Title>
