@@ -75,7 +75,6 @@ const Login = () => {
      <LoginBackground>
      <Header/>
         <div className="login-form">
-        {console.log(user)}
         <Form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="name">Username</label>

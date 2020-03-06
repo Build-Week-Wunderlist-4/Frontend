@@ -2,135 +2,133 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
-import axios from 'axios';
-import Header from "./Header"
-import BackgroundImage from "./pins.jpg"
+import axios from "axios";
+import Header from "./Header";
+import BackgroundImage from "./pins.jpg";
 //background Styles
 const LoginBackground = styled.div`
-  background: url(${BackgroundImage}) no-repeat center center fixed; 
-  background-size: cover;    
-  height:100%;
-  overflow-y:hidden;
-`
+  background: url(${BackgroundImage}) no-repeat center center fixed;
+  background-size: cover;
+  height: 100%;
+  overflow-y: hidden;
+`;
 
 //styles
 const Form = styled.form`
-font-weight:bold;
-font-size: 1.5em;
-color:rgb(255,255,255,.5);
-  margin: 10% 70% 40% 2% ;
-  background-color: rgb(211,0,0,.4);
-    box-shadow: 2px 2px 10px 10px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  font-size: 1.5em;
+  color: rgb(255, 255, 255, 0.5);
+  margin: 10% 70% 40% 2%;
+  background-color: rgb(211, 0, 0, 0.4);
+  box-shadow: 2px 2px 10px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 5%;
-  font-family: 'Spartan', sans-serif;
-  `
+  font-family: "Spartan", sans-serif;
+`;
 
 const Member = styled.div`
-margin-top: 40%;
-`
-const Button = styled.button `
-font-size:1rem;
-font-weight:bold;
-padding: 2% 10%;
-background-color: rgb(255,255,255,.5);
-    background-repeat:no-repeat;
-    border: 1px solid black;
-    border-radius: 15px;
-    cursor:pointer;
-    overflow: hidden; 
-`
+  margin-top: 40%;
+`;
+const Button = styled.button`
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 2% 10%;
+  background-color: rgb(255, 255, 255, 0.5);
+  background-repeat: no-repeat;
+  border: 1px solid black;
+  border-radius: 15px;
+  cursor: pointer;
+  overflow: hidden;
+`;
 
 const SignUp = () => {
-    const [user, setUser] = useState({
-        username: "",
-        password: "",
-        email: ""
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+    email: ""
+  });
+
+  const history = useHistory();
+
+  const handleChange = event => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value
     });
-    
-    const history = useHistory();
+  };
 
-    const handleChange = event => {
-        setUser({
-            ...user,
-            [event.target.name]: event.target.value
-        });
-    };
+  const register = event => {
+    event.preventDefault();
+    axios
+      .post(
+        "https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register",
+        user,
+        {
+          headers: { "Access-Control-Allow-Origin": "*" }
+        }
+      )
 
-    const register = event => {
-        event.preventDefault();
-        axios
-        .post(
-            "https://cors-anywhere.herokuapp.com/https://wunderlistbuild.herokuapp.com/api/auth/register",
-            user,
-            {
-                headers: { "Access-Control-Allow-Origin": "*" }
-            }
-        )
+      .then(res => {
+        console.log(res);
+        history.push("/");
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
-
-            .then(res => {
-                console.log(res);
-                history.push("/");
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    };
-
-    
-
-    return (
-        <LoginBackground>
-             <Header/>
-        <div className="login-form">
-            {console.log(user)}
-            <Form onSubmit={register}>
-                <div>
-                    <label htmlFor="username">Username</label>
-                    <input
-                        id="username"
-                        type="text"
-                        name="username"
-                        placeholder="username"
-                        onChange={handleChange}
-                        value={user.username}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input
-                        id="password"
-                        type="password"
-                        name="password"
-                        placeholder="password"
-                        onChange={handleChange}
-                        value={user.password}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input
-                        id="email"
-                        type="email"
-                        name="email"
-                        placeholder="email"
-                        onChange={handleChange}
-                        value={user.email}
-                    />
-                </div>
-                <Button className="login button" type="login">
-                    Sign Up</Button>
-                <Member>
-                    <h3> Already a member?</h3>
-                    <Link to="/"><Button>Login</Button></Link>
-                </Member>
-            </Form>
-        </div>
-        </LoginBackground>
-       
-    );
+  return (
+    <LoginBackground>
+      <Header />
+      <div className="login-form">
+        {console.log(user)}
+        <Form onSubmit={register}>
+          <div>
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              name="username"
+              placeholder="username"
+              onChange={handleChange}
+              value={user.username}
+            />
+          </div>
+          <div>
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="password"
+              onChange={handleChange}
+              value={user.password}
+            />
+          </div>
+          <div>
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="email"
+              onChange={handleChange}
+              value={user.email}
+            />
+          </div>
+          <Button className="login button" type="login">
+            Sign Up
+          </Button>
+          <Member>
+            <h3> Already a member?</h3>
+            <Link to="/">
+              <Button>Login</Button>
+            </Link>
+          </Member>
+        </Form>
+      </div>
+    </LoginBackground>
+  );
 };
-
 
 export default SignUp;

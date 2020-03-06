@@ -3,6 +3,8 @@ import AxiosWithAuth from "../utils/AxiosWithAuth";
 import styled from "styled-components";
 import Header from "./Header";
 import Background from "./colors1.jpg";
+import { changeTask } from './actions/index';
+import { connect } from 'react-redux';
 
 //styles
 const Controls = styled.div`
@@ -47,11 +49,13 @@ const AddButton = styled.button`
   overflow: hidden;
 `;
 
-const ToDo = () => {
+const ToDo = (props) => {
   const [input, setInput] = useState({});
   const [tasks, setTasks] = useState([]);
   const [bool, setBool] = useState(true);
   const [update, setUpdate] = useState({});
+
+  console.log("5. Todo.js - FINAL PROPS", props);
 
   useEffect(() => {
     AxiosWithAuth()
@@ -103,7 +107,6 @@ const ToDo = () => {
     AxiosWithAuth()
       .delete("api/tasks/deletecompleted")
       .then(res => {
-        // console.log(res);
         setBool(!bool);
       })
       .catch(err => {
@@ -117,7 +120,6 @@ const ToDo = () => {
         is_complete: !status
       })
       .then(res => {
-        console.log(res);
         setBool(!bool);
       })
       .catch(err => {
@@ -126,12 +128,16 @@ const ToDo = () => {
   };
 
   const editTask = id => {
-    setUpdate({ is_edit: !update.is_edit, item_id: id });
+    // setUpdate({ is_edit: !update.is_edit, item_id: id });
+    console.log("1. ToDo.js, editTask - props", props);
+    
+    // GOTCHA: Running changeTask isn't the same as props.changeTask
+    props.changeTask(id);
   };
 
   const submitEdit = () => {
     AxiosWithAuth()
-      .put(`api/tasks/${update.item_id}`, {
+      .put(`api/tasks/${props.item_id}`, {
         name: update.updatedTask,
         is_complete: 0
       })
@@ -174,7 +180,7 @@ const ToDo = () => {
           >
             <h3> {i.name} </h3>{" "}
             {/* <p>{i.repeat_condition === 1 ? "Daily" : ""}</p> */}
-            {update.item_id === i.id && update.is_edit ? (
+            {props.item_id === i.id && props.is_edit ? (
               <>
                 <input
                   name="updatedTask"
@@ -187,7 +193,7 @@ const ToDo = () => {
               ""
             )}
             <TaskFont onClick={() => editTask(i.id)}>
-              {update.item_id === i.id && update.is_edit ? "cancel" : "edit"}
+              {props.item_id === i.id && props.is_edit ? "cancel" : "edit"}
             </TaskFont>
             <TaskFont onClick={() => markComplete(i.id, i.is_complete)}>
               complete
@@ -200,7 +206,13 @@ const ToDo = () => {
   );
 };
 
-export default ToDo;
+const mapPropsToState = state => {
+  console.log("4. ToDo.js - state", state)
+  return state;
+};
+export default connect(mapPropsToState, {changeTask})(ToDo);
+
+// export default connect({ changeTask })(ToDo);
 
 // const setSchedule = e => {
 //   e.preventDefault();
